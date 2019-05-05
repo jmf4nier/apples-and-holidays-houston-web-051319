@@ -62,42 +62,61 @@ def all_winter_holiday_supplies(holiday_hash)
   winter_supplies.flatten
 end
 
-def all_supplies_in_holidays(holiday_hash)
-  def converting_holidays(holiday)
+season = :spring
+holiday_name = :martin_luther_king
+supply_array = ["chips"]
+holiday_hash =
+      {
+      :winter => {
+        :christmas => ["Lights", "Wreath"],
+        :new_years => ["Party Hats"]
+      },
+      :summer => {
+        :fourth_of_july => ["Fireworks", "BBQ"]
+      },
+      :fall => {
+        :thanksgiving => ["Turkey"]
+      },
+      :spring => {
+        :memorial_day => ["BBQ"]
+      }
+  }
+
+  def all_supplies_in_holidays(holiday_hash)
+    def converting_holidays(holiday)
       empty = []
       holiday.to_s.split("_").each do |string|
         empty << string.capitalize
       end
       empty.join(" ")
-  end
-
-  def converting_supplies(array)  
-    def normal_array(array)
-      empty = []
-      array.collect do |string|
-        if string == "BBQ"
-          empty << string
-        else 
+    end
+    def converting_supplies(array)
+      def normal_array(array)
+        empty = []
+        array.collect do |string|
+          if string == "BBQ"
+            empty << string
+          else
+            empty << string.capitalize
+          end
+        end
+        empty.join(", ")
+      end
+      def short_array(array)
+        empty = []
+        array = array.join
+        array = array.split
+        array.each do |string|
           empty << string.capitalize
         end
+        empty.join(" ")
       end
-      empty.join(", ")
+      if array.length > 1 || array.include?("BBQ")
+        normal_array(array)
+      else
+        short_array(array)
+      end
     end
-    def short_array(array)  
-      empty = []
-      array = array.join
-      array = array.split 
-      array.each do |string|
-        empty << string.capitalize
-      end
-      empty.join(" ")
-  end
-  if array.length > 1
-    normal_array(array)
-  else 
-    short_array(array)
-  end
-end
     holiday_hash.each do |season, holiday|
       seasons = season.to_s.capitalize!.split
       puts "#{seasons.join}:"
@@ -105,7 +124,7 @@ end
         puts "  #{converting_holidays(holiday)}: #{converting_supplies(supplies)}"
       end
     end
-end
+  end
 all_supplies_in_holidays(holiday_hash)
 
 def all_holidays_with_bbq(holiday_hash)
